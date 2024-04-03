@@ -202,9 +202,9 @@ class Node:
     def find_next_move(self):
         if self.children == []:
             if len(Node(self.n, self.chance*-1, self.grid, self.depth).children) == 0:
-                return "game over"
+                return "game over" , None
             else:
-                return "opponent chance"
+                return "opponent chance", None
         ans_arr = [i for i in self.children if i.max_child == self.max_child]
         ans = ans_arr[0]
         for i in ans_arr[1:]:
