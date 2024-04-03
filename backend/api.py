@@ -21,9 +21,10 @@ def return_move():
         chance = data['chance']
         depth = data['depth']
     except:
-        return "invalid array"
+        return jsonify({"can_move":"invalid array"})
     response = {}
     tree = Node(n, chance, grid, depth)
+    print(tree)
     response['can_move'] = tree.can_move
     response['grid'], response['next_possibilities'] = tree.find_next_move()
     return jsonify(response)

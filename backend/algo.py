@@ -158,56 +158,83 @@ class Node:
     def __init__(self,n, chance, grid, depth, prev = None):
         self.grid = grid
         self.chance = chance
-        self.max_child = None
         self.n = n
+        self.first_child_created = False
         self.depth = depth
         self.score = 0
+        self.sum_score = 0
         self.children = []
         self.prev = prev
         self.can_move = self.find_children()
 
     def find_children(self):
+
+        #If on leaf due to depth = 0
         if self.depth == 0:
             self.score = np.sum(self.grid)
-            self.max_child = np.sum(self.grid)
-            return
+            return "can't move"
+
+        #If on leaf due to grid filled
         if np.all(self.grid):
-            score = np.sum(self.grid)
-            if score>0:
-                self.score = 1
-                self.max_child = 1
-            elif score == 0:
-                self.score =self.max_child= 0
-            else:
-                self.score = self.max_child = -1
-            return
+            self.score = np.sum(self.grid)
+            return "can't move"
+
         for i in range(self.n):
+            break_loop = False
             for j in range(self.n):
                 if self.grid[i, j]==0:
                     arr, updates = update(self.grid, i, j, self.chance)
                     if updates == 0:
                         continue
-                    node=Node(self.n, self.chance*-1, arr, self.depth-1, self)
-                    self.children.append(node)
-        if self.children == []:
-            self.score = np.sum(self.grid)
-            self.max_child = np.sum(self.grid)
+                    if self.first_child_created == False:
+                        self.first_child_created = True
+                        node=Node(self.n, self.chance*-1, arr, self.depth-1,self)
+                        self.children.append(node)
+                        #need to set score for this node after creation of first node
+                        self.score = node.score
+                    else:
+                        #check if this node's further children even matter for parent
+                        if self.prev != None:
+                            if (self.chance == 1 and self.prev.score <= self.score) or (self.chance == -1 and self.prev.score >= self.score):
+                                break_loop = True
+                                break
+                            else:
+                                node=Node(self.n, self.chance*-1, arr, self.depth-1 ,self)
+                                self.children.append(node)
+                                #need to check if I need to update this node's score after each node creation
+                                if self.chance == 1:
+                                    if self.score < node.score:
+                                        self.score = node.score
+                                else:
+                                    if self.score > node.score:
+                                        self.score = node.score
+                        else:
+                            #below is same code as previous else
+                            node=Node(self.n, self.chance*-1, arr, self.depth-1 ,self)
+                            self.children.append(node)
+                            #need to check if I need to update this node's score after each node creation
+                            if self.chance == 1:
+                                if self.score < node.score:
+                                    self.score = node.score
+                            else:
+                                if self.score > node.score:
+                                    self.score = node.score
+            if break_loop:
+                break
+        
+        if len(self.children) == 0:
             return "can't move"
-        children_score = [i.score for i in self.children]
-        self.score = sum(children_score)
-        children_max_score = [i.max_child for i in self.children]
-        self.max_child = max(children_max_score)
         return "can move"
     
     def find_next_move(self):
         if self.children == []:
             if len(Node(self.n, self.chance*-1, self.grid, self.depth).children) == 0:
-                return "game over" , None
+                return "game over", None 
             else:
                 return "opponent chance", None
-        ans_arr = [i for i in self.children if i.max_child == self.max_child]
+        ans_arr = [i for i in self.children if i.score == self.score]
         ans = ans_arr[0]
         for i in ans_arr[1:]:
             if i.score > ans.score:
                 ans = i
-        return ans.grid.tolist(), [i.grid.tolist() for i in ans.children]
+        return ans.grid.tolist(), [i.grid.tolist() for i in self.children]
