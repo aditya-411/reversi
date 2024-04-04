@@ -20,7 +20,7 @@ p {
 }
 
 .start,
-.leaderboard {
+.leader {
   background-color: transparent;
   color: #fff;
   border: 2px solid #fff;
@@ -33,7 +33,7 @@ p {
   overflow: hidden;
 }
 
-.leaderboard.start:before {
+.leader.start:before {
   content: "";
   position: absolute;
   top: 0;
@@ -44,15 +44,15 @@ p {
   transition: left 0.3s;
 }
 
-.leaderboard.start:hover {
+.leader.start:hover {
   background-color: rgba(255, 255, 255, 0.1);
 }
 
-.leaderboard.start:hover:before {
+.leader.start:hover:before {
   left: 0;
 }
 
-.home-container .leaderboard:last-child {
+.home-container .leader:last-child {
   position: absolute;
   top: 0rem;
   right: 0rem;
@@ -67,7 +67,7 @@ p {
   transition: background-color 0.3s, transform 0.3s;
 }
 
-.home-container .leaderboard:last-child:hover {
+.home-container .leader:last-child:hover {
   background-color: transparent;
   color: white;
   transform: scale(1.05);
