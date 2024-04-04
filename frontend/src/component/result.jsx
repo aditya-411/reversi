@@ -8,7 +8,7 @@ function ResultsPage() {
     <div className="res">
       <h1>Results</h1>
       <p>The winner is: {winner}</p>
-      <button className="leader" id="home">Back To Home!</button>
+      <button className="leader" id="home" onClick={()=>window.location.href="/"}>Back To Home!</button>
     </div>
   );
 }
