@@ -15,8 +15,10 @@
     align-items: center;
     background-color: darkgreen;
     height: 100vh;
+   } */
+   body{
+    background-color: darkgreen;
    }
-   
    button {
     background-color: darkgreen;
     border: 1px solid #000;
@@ -24,7 +26,7 @@
     height: 6rem;
     justify-content: center;
     align-items: center;
-   } */
+   }
    
    .cell.one::before {
     content: "";

@@ -21,8 +21,8 @@ const Home = () => {
         is filled.
       </p>
       <p>To start playing, click the Start button below.</p>
-      <button onClick={goToStart}>Start</button>
-      <button onClick={goToAbout}>Leaderboard</button>
+      <button onClick={goToStart} className='start'>Start</button>
+      <button onClick={goToAbout} className='leaderboard'>Leaderboard</button>
     </div>
  );
 };

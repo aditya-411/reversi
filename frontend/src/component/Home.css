@@ -19,12 +19,13 @@ p {
   margin-bottom: 1rem;
 }
 
-button {
+.start,
+.leaderboard {
   background-color: transparent;
   color: #fff;
   border: 2px solid #fff;
   border-radius: 4px;
-  padding: 1rem 2rem;
+  height: 3rem;
   font-size: 1.5rem;
   cursor: pointer;
   transition: background-color 0.3s, box-shadow 0.3s;
@@ -32,7 +33,7 @@ button {
   overflow: hidden;
 }
 
-button:before {
+.leaderboard.start:before {
   content: "";
   position: absolute;
   top: 0;
@@ -43,31 +44,31 @@ button:before {
   transition: left 0.3s;
 }
 
-button:hover {
+.leaderboard.start:hover {
   background-color: rgba(255, 255, 255, 0.1);
 }
 
-button:hover:before {
+.leaderboard.start:hover:before {
   left: 0;
 }
 
-.home-container button:last-child {
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-    background-color:white ; 
-    color: black;
-    border: none; 
-    border-radius: 4px; 
-    padding: 1rem 2rem;
-    font-size: 1.2rem; 
-    cursor: pointer; 
-    transition: background-color 0.3s, transform 0.3s; 
-   }
-   
-   .home-container button:last-child:hover {
-    background-color: transparent ;
-    color: white;
-    transform: scale(1.05); 
-   }
-   
+.home-container .leaderboard:last-child {
+  position: absolute;
+  top: 0rem;
+  right: 0rem;
+  margin-top: 1rem;
+  margin-right: 1rem;
+  width:12rem;
+  background-color: white;
+  color: black;
+  border-radius: 4px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+.home-container .leaderboard:last-child:hover {
+  background-color: transparent;
+  color: white;
+  transform: scale(1.05);
+}

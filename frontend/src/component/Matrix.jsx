@@ -46,9 +46,7 @@ class Matrix extends Component {
     const newValue = currentValue === -1 ? 1 : -1;
     newMatrix[row][col] = newValue;
     this.setState({ matrix: newMatrix });
-    console.log(".")
     const apiResponse = await this.sendMatrixToAPI(newMatrix, [row, col]);    
-    console.log(".")
     this.setState({ matrix: apiResponse });
    };
 
