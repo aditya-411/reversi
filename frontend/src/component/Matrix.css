@@ -1,0 +1,46 @@
+.matrix-container {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    grid-template-rows: repeat(8, 1fr);
+    width: 400px;
+    height: 400px;
+    margin: 0 auto;
+    border: 2px solid black;
+   }
+   
+   body {
+    margin-top: 2rem;
+    margin-left: 22.5rem;
+    justify-content: center;
+    align-items: center;
+    background-color: darkgreen;
+    height: 100vh;
+   }
+   
+   button {
+    background-color: darkgreen;
+    border: 1px solid #000;
+    width: 6rem;
+    height: 6rem;
+    justify-content: center;
+    align-items: center;
+   }
+   
+   .cell.one::before {
+    content: "";
+    display: block;
+    width: 5rem; 
+    height: 5rem;
+    border-radius: 50%;
+    background-color: white;
+   }
+   
+   .cell.-one::before {
+    content: "";
+    display: block;
+    width: 5rem; /* Adjust size as needed */
+    height: 5rem; /* Adjust size as needed */
+    border-radius: 50%;
+    background-color: black;
+   }
+   
