@@ -31,30 +31,48 @@ def move():
     for i in [j.grid for j in tree.children]:
 
         if i[current_move[0], current_move[1]] == -1:
+            print(i)
+            print(tree.grid)
+            print(current_move)
             valid_move = True
             grid = np.array(i)
             tree = Node(n, 1, grid, depth)
+            break
     if not valid_move:
         return jsonify({"can_move":"invalid user move"}), 200, {'Content-Type': 'application/json'}
     
     #If bot finds no valid move for it
     if len(tree.children) == 0:
         if len(Node(tree.n, -1, tree.grid, tree.depth).children) == 0:
-                return jsonify({"can_move":"can't move", "grid":tree.grid.tolist(), "winner":"user"}), 200, {'Content-Type': 'application/json'}
+                if np.count_nonzero(tree.grid == 1)>np.count_nonzero(tree.grid == -1):
+                    return jsonify({"can_move":"can't move", "grid":next_move.grid.tolist(), "winner":"bot"}), 200, {'Content-Type': 'application/json'}
+                else:
+                    return jsonify({"can_move":"can't move", "grid":next_move.grid.tolist(), "winner":"user"}), 200, {'Content-Type': 'application/json'}
         else:
                 return jsonify({"can_move":"can move", "grid":tree.grid.tolist()}), 200, {'Content-Type': 'application/json'}
 
     #If bot finds a valid move for it
-    next_move = tree.find_next_move
+    next_move = tree.find_next_move()
     if len(next_move.children) >0:
         return jsonify({"can_move":"can move", "grid":next_move.grid.tolist()}), 200, {'Content-Type': 'application/json'}
     elif -1 not in next_move.grid:
         return jsonify({"can_move":"can't move", "grid":next_move.grid.tolist(), "winner":"bot"}), 200, {'Content-Type': 'application/json'}
+    elif 0 not in next_move.grid:
+        if np.count_nonzero(next_move.grid == 1)>np.count_nonzero(next_move.grid == -1):
+            return jsonify({"can_move":"can't move", "grid":next_move.grid.tolist(), "winner":"bot"}), 200, {'Content-Type': 'application/json'}
+        else:
+            return jsonify({"can_move":"can't move", "grid":next_move.grid.tolist(), "winner":"user"}), 200, {'Content-Type': 'application/json'}
     else:
         while len(next_move.children) == 0:
-            next_move = Node(n, 1, next_move.grid, depth).find_next_move
+            next_move = Node(n, 1, next_move.grid, depth).find_next_move()
             if -1 not in next_move:
                 break
+            if 0 not in next_move:
+                if np.count_nonzero(next_move.grid == 1)>np.count_nonzero(next_move.grid == -1):
+                    return jsonify({"can_move":"can't move", "grid":next_move.grid.tolist(), "winner":"bot"}), 200, {'Content-Type': 'application/json'}
+                else:
+                    return jsonify({"can_move":"can't move", "grid":next_move.grid.tolist(), "winner":"user"}), 200, {'Content-Type': 'application/json'}
+                
         if -1 not in next_move.grid:
             return jsonify({"can_move":"can't move", "grid":next_move.grid.tolist(), "winner":"bot"}), 200, {'Content-Type': 'application/json'}
         else:

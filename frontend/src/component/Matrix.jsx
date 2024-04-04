@@ -34,9 +34,7 @@ class Matrix extends Component {
         request_options
       );
       const data = await response.json();
-      const output = data.grid;
-      console.log(data);
-      return output;
+      return data;
     } catch (error) {
       console.error("Error fetching grid:", error);
       return null;
@@ -46,8 +44,11 @@ class Matrix extends Component {
   updateCell = async (row, col) => {
     const newMatrix = this.state.matrix.map((row) => [...row]);
     const currentValue = newMatrix[row][col];
-    const newValue = currentValue === -1 ? 1 : -1;
-    newMatrix[row][col] = newValue;
+    if (currentValue!==0){
+      return;
+    }
+    // const newValue = currentValue === -1 ? 1 : -1;
+    // newMatrix[row][col] = newValue;
     this.setState({ matrix: newMatrix });
     const apiResponse = await this.sendMatrixToAPI(newMatrix, [row, col]);
     console.log(apiResponse);
