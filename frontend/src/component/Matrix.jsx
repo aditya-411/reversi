@@ -5,42 +5,40 @@ class Matrix extends Component {
   constructor(props) {
     super(props);
     const initialMatrix = Array.from({ length: 8 }, () => Array(8).fill(0));
-
-    for (let i = 3; i < 4; i++) {
-      for (let j = 3; j < 5; j++) {
-        initialMatrix[i][j] = -1;
-      }
-    }
-    for (let i = 4; i < 5; i++) {
-      for (let j = 3; j < 5; j++) {
-        initialMatrix[i][j] = 1;
-      }
-    }
+    
+    initialMatrix[3][3]= initialMatrix[4][4] = -1
+    initialMatrix[3][4] = initialMatrix[4][3] = 1
 
     this.state = {
       matrix: initialMatrix,
     };
   }
-  sendMatrixToAPI = async (matrix) => {
-    try {
-       const response = await fetch('YOUR_API_ENDPOINT', {
-         method: 'POST',
-         headers: {
-           'Content-Type': 'application/json',
-         },
-         body: JSON.stringify({ matrix }),
-       });
-   
-       if (!response.ok) {
-         throw new Error('Network response was not ok');
-       }
-   
-       const data = await response.json();
-       return data;
-    } catch (error) {
-       console.error('There was a problem with the fetch operation:', error);
+  sendMatrixToAPI = async (matrix, move) => {
+    const input_data = {
+      'grid' : matrix,
+      'current_move': move 
+    };
+
+    console.log("step 1");
+
+    const request_options = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(input_data)
     }
+    console.log("step 2");
+
+
+    fetch('/move/', request_options)
+      .then(response => response.json())
+      .then(data => console.log(data))
+      .catch(error => console.error(error))
+
+      console.log("step 3")
    };
+
    
    updateCell = async (row, col) => {
     const newMatrix = this.state.matrix.map((row) => [...row]);
@@ -48,7 +46,9 @@ class Matrix extends Component {
     const newValue = currentValue === -1 ? 1 : -1;
     newMatrix[row][col] = newValue;
     this.setState({ matrix: newMatrix });
-    const apiResponse = await this.sendMatrixToAPI(newMatrix);    
+    console.log(".")
+    const apiResponse = await this.sendMatrixToAPI(newMatrix, [row, col]);    
+    console.log(".")
     this.setState({ matrix: apiResponse });
    };
 
@@ -62,9 +62,9 @@ class Matrix extends Component {
               if (cell === 0) {
                 cellClass += "empty";
               } else if (cell === 1) {
-                cellClass += "one";
-              } else if (cell === -1) {
                 cellClass += "-one";
+              } else if (cell === -1) {
+                cellClass += "one";
               }
               return (
                 <button

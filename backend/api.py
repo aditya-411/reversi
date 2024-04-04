@@ -9,6 +9,7 @@ app = Flask(__name__)
 
 @app.route('/move/', methods=['GET', 'POST'])
 def return_move():
+    print("got request")
     data = request.get_json()
     grid = None
     n = None
