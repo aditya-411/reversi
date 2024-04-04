@@ -95,6 +95,7 @@ def move():
 @app.route('/updatelb/', methods=['GET', 'POST'])
 def update_leaderboard():
     data = request.get_json()
+    data['data'].sort(key=lambda x:x['score'], reverse=True)
     write_lb(data)
     print("done")
     return "updated"

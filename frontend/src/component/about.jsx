@@ -5,7 +5,6 @@ import data from '../final_leaderboard.json'
 
 const Leaderboard = () => {
 const players = data["data"];
-players.sort()
 console.log(players);
 
  return (
