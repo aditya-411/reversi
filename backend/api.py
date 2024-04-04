@@ -47,6 +47,6 @@ def return_move():
     #3) can_move: can't move  grid: user won   (user won the game)
     #4) can_move: can move grid: bot won       (bot won the game)
     #5 can_move: can't move grid: opponent chance (another chance for opponent)
-    #5) can_move: can move  grid: a matrix  next_possibilities: a list of 
+    #6) can_move: can move  grid: a matrix  
 if __name__ == "__main__":
     app.run(debug=True, port=5000, host='0.0.0.0')
