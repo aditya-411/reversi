@@ -2,6 +2,10 @@ import React, { Component } from "react";
 import { Navigate } from "react-router-dom";
 
 import "./Matrix.css";
+import data from '../leaderboard.json'
+
+var players = data["data"];
+players.sort();
 
 class Matrix extends Component {
   constructor(props) {
@@ -50,6 +54,22 @@ class Matrix extends Component {
     }
     // const newValue = currentValue === -1 ? 1 : -1;
     // newMatrix[row][col] = newValue;
+
+    function countOccurrences(arr, target) {
+      let count = 0;
+      
+      for (let i = 0; i < arr.length; i++) {
+        for (let j = 0; j < arr[i].length; j++) {
+          if (arr[i][j] === target) {
+            count++;
+          }
+        }
+      }
+      
+      return count;
+    }
+
+
     this.setState({ matrix: newMatrix });
     const apiResponse = await this.sendMatrixToAPI(newMatrix, [row, col]);
     console.log(apiResponse);
@@ -62,6 +82,31 @@ class Matrix extends Component {
     }
     if (apiResponse.can_move === "can't move") {
       console.log("Game Over", apiResponse.winner, "won");
+      if (apiResponse.winner === "user") {
+        players.concat({"name": "You", "score": (countOccurrences(apiResponse.grid, -1)-countOccurrences(apiResponse.grid, 1))*100});
+        const input_data = {
+          array: players
+        };
+    
+        const request_options = {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(input_data),
+        };
+
+        try {
+          await fetch(
+            "http://127.0.0.1:5000/updatelb/",
+            request_options
+          );
+        } catch (error) {
+          console.error("Error fetching grid:", error);
+          return null;
+        }
+
+    }
       this.setState({
         matrix: apiResponse.grid,
         redirectToResult: true,

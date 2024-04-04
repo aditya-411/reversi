@@ -2,9 +2,12 @@ from algo import Node
 from flask import Flask, jsonify, request, render_template, send_from_directory
 from flask_cors import CORS, cross_origin
 import numpy as np
+import json
 
 
-
+def write_lb(data):
+    with open('frontend/src/final_leaderboard.json', 'w') as file:
+        json.dump(data, file)
 
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "*"}})
@@ -86,5 +89,16 @@ def move():
     #4) can_move: can't move grid: bot won       (bot won the game)
     #5 can_move: can't move grid: opponent chance (another chance for opponent)
     #6) can_move: can move  grid: a matrix  
+
+
+
+@app.route('/updatelb/', methods=['GET', 'POST'])
+def update_leaderboard():
+    data = request.get_json()
+    write_lb(data)
+    print("done")
+    return "updated"
+
+
 if __name__ == "__main__":
     app.run()

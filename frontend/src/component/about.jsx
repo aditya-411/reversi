@@ -1,12 +1,12 @@
 import React from 'react';
 import './Leaderboard.css'; 
+import data from '../final_leaderboard.json'
+
 
 const Leaderboard = () => {
- const players = [
-    { name: 'Player 1', score: 1000 },
-    { name: 'Player 2', score: 900 },
-    { name: 'Player 3', score: 850 },
- ];
+const players = data["data"];
+players.sort()
+console.log(players);
 
  return (
     <div className="leaderboard">
