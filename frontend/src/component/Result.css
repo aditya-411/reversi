@@ -1,0 +1,26 @@
+.res {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    font-family: Arial, sans-serif;
+    background-image: url("../images/homebg.jpeg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    position: relative;
+    color: white;
+  }
+  
+  .res h1 {
+    font-size: 2.5em;
+    margin-bottom: 2rem;
+  }
+  
+  .res p {
+    font-size: 1.5em;
+  }
+  #home{
+    width:20rem;
+  }

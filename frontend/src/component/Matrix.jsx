@@ -1,7 +1,7 @@
-import React, { Component } from "react";
+import React, { Component, us } from "react";
 import { Navigate } from "react-router-dom";
-
 import "./Matrix.css";
+import "./Popup.css";
 import data from '../leaderboard.json'
 
 var players = data["data"];
@@ -16,6 +16,7 @@ class Matrix extends Component {
     this.state = {
       matrix: initialMatrix,
       redirectToResult: false,
+      showPopup: false,
     };
   }
   sendMatrixToAPI = async (matrix, move) => {
@@ -49,7 +50,7 @@ class Matrix extends Component {
   updateCell = async (row, col) => {
     const newMatrix = this.state.matrix.map((row) => [...row]);
     const currentValue = newMatrix[row][col];
-    if (currentValue!==0){
+    if (currentValue !== 0) {
       return;
     }
     // const newValue = currentValue === -1 ? 1 : -1;
@@ -78,6 +79,7 @@ class Matrix extends Component {
       apiResponse.can_move === "invalid user move"
     ) {
       console.log("Invalid move:", apiResponse.can_move);
+      this.setState({ showPopup: true });
       return;
     }
     if (apiResponse.can_move === "can't move") {
@@ -117,7 +119,11 @@ class Matrix extends Component {
 
     this.setState({ matrix: apiResponse.grid });
   };
-
+  closePopup=()=>{
+    console.log('close')
+    this.setState({ showPopup: false });
+    
+  };
   render() {
     const { redirectToResult, winner } = this.state;
 
@@ -126,28 +132,39 @@ class Matrix extends Component {
     }
 
     return (
-      <div className="matrix">
-        {this.state.matrix.map((row, rowIndex) => (
-          <div key={rowIndex}>
-            {row.map((cell, colIndex) => {
-              let cellClass = "cell ";
-              if (cell === 0) {
-                cellClass += "empty";
-              } else if (cell === 1) {
-                cellClass += "-one";
-              } else if (cell === -1) {
-                cellClass += "one";
-              }
-              return (
-                <button
-                  key={colIndex}
-                  className={cellClass}
-                  onClick={() => this.updateCell(rowIndex, colIndex)}
-                ></button>
-              );
-            })}
+      <div className="gamepage">
+        {this.state.showPopup && (
+          <div className="popup-container">
+          <div className="popup-body">
+            <h1>Invalid Move</h1>
+            <button onClick={this.closePopup}>Close X</button>
           </div>
-        ))}
+        </div>
+         
+        )}
+        <div className="matrix">
+          {this.state.matrix.map((row, rowIndex) => (
+            <div key={rowIndex}>
+              {row.map((cell, colIndex) => {
+                let cellClass = "cell ";
+                if (cell === 0) {
+                  cellClass += "empty";
+                } else if (cell === 1) {
+                  cellClass += "-one";
+                } else if (cell === -1) {
+                  cellClass += "one";
+                }
+                return (
+                  <button
+                    key={colIndex}
+                    className={cellClass}
+                    onClick={() => this.updateCell(rowIndex, colIndex)}
+                  ></button>
+                );
+              })}
+            </div>
+          ))}
+        </div>
       </div>
     );
   }
