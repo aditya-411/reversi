@@ -82,11 +82,12 @@ class Matrix extends Component {
       this.setState({ showPopup: true });
       return;
     }
+    if (apiResponse.can_move === "can't move") {
       console.log("Game Over", apiResponse.winner, "won");
-      if (apiResponse.winner === "user" || apiResponse.winner === "bot") {
-        players.concat({"name": "You", "score": Math.max(0, (countOccurrences(apiResponse.grid, -1)-countOccurrences(apiResponse.grid, 1))*100)});
+      if (apiResponse.winner === "user") {
+        players.concat({"name": "You", "score": (countOccurrences(apiResponse.grid, -1)-countOccurrences(apiResponse.grid, 1))*100});
         const input_data = {
-          data: players
+          array: players
         };
     
         const request_options = {
@@ -107,7 +108,7 @@ class Matrix extends Component {
           return null;
         }
 
-    
+    }
       this.setState({
         matrix: apiResponse.grid,
         redirectToResult: true,

@@ -34,9 +34,6 @@ def move():
     for i in [j.grid for j in tree.children]:
 
         if i[current_move[0], current_move[1]] == -1:
-            print(i)
-            print(tree.grid)
-            print(current_move)
             valid_move = True
             grid = np.array(i)
             tree = Node(n, 1, grid, depth)
@@ -95,6 +92,7 @@ def move():
 @app.route('/updatelb/', methods=['GET', 'POST'])
 def update_leaderboard():
     data = request.get_json()
+    print(data)
     data['data'].sort(key=lambda x:x['score'], reverse=True)
     write_lb(data)
     print("done")
