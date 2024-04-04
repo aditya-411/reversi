@@ -6,7 +6,7 @@ import {
 } from "react-router-dom";
 import Home from "./component/home.jsx";
 import About from "./component/about.jsx";
-// import Game from "./components/Board";
+import Game from "./component/Game.js";
 class App extends Component {
     render() {
         return (
@@ -17,10 +17,10 @@ class App extends Component {
                             path="/"
                             element={<Home />}
                         ></Route>
-                        {/* <Route
+                        <Route
                             path="/game"
                             element={<Game />}
-                        ></Route> */}
+                        ></Route>
                         <Route
                             path="/about"
                             element={<About />}
