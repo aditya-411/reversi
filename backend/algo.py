@@ -237,4 +237,4 @@ class Node:
         for i in ans_arr[1:]:
             if i.score > ans.score:
                 ans = i
-        return ans.grid.tolist(), len(self.children)
+        return ans.grid.tolist(), [i.grid.tolist() for i in self.children]

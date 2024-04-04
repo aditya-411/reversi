@@ -16,10 +16,10 @@ class Matrix extends Component {
   sendMatrixToAPI = async (matrix, move) => {
     const input_data = {
       'grid' : matrix,
-      'current_move': move 
+      'current_move': move,
+      'depth' : 6,
     };
 
-    console.log("step 1");
 
     const request_options = {
       method: 'POST',
@@ -28,15 +28,19 @@ class Matrix extends Component {
       },
       body: JSON.stringify(input_data)
     }
-    console.log("step 2");
+
+    var output;
 
 
-    fetch('/move/', request_options)
+    fetch('http://127.0.0.1:5000/move/', request_options)
       .then(response => response.json())
-      .then(data => console.log(data))
-      .catch(error => console.error(error))
+      .then(data => {
+        output = data;
+       })
+      .then(() => {
+        console.log(output);
+       });
 
-      console.log("step 3")
    };
 
    
