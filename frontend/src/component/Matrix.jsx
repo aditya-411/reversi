@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Navigate } from 'react-router-dom';
+import { Navigate } from "react-router-dom";
 
 import "./Matrix.css";
 
@@ -11,6 +11,7 @@ class Matrix extends Component {
     initialMatrix[3][4] = initialMatrix[4][3] = 1;
     this.state = {
       matrix: initialMatrix,
+      redirectToResult: false,
     };
   }
   sendMatrixToAPI = async (matrix, move) => {
@@ -61,13 +62,24 @@ class Matrix extends Component {
     }
     if (apiResponse.can_move === "can't_move") {
       console.log("Game Over", apiResponse.winner, "won");
-      this.setState({matrix: apiResponse.grid});
+      this.setState({
+        matrix: apiResponse.grid,
+        redirectToResult: true,
+        winner: apiResponse.winner,
+      });
       return;
     }
+
     this.setState({ matrix: apiResponse.grid });
   };
 
   render() {
+    const { redirectToResult, winner } = this.state;
+
+    if (redirectToResult) {
+      return <Navigate to="/results" state={{ winner }} replace />;
+    }
+
     return (
       <div className="matrix">
         {this.state.matrix.map((row, rowIndex) => (
