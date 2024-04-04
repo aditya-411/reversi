@@ -2,8 +2,8 @@
   display: grid;
   grid-template-columns: repeat(8, 1fr);
   grid-template-rows: repeat(8, 1fr);
-  width: 400px;
-  height: 400px;
+  width: min(80vh, 80vw);
+  height: min(80vh, 80vw);
   margin-top: 3rem;
   margin-left: 3rem;
   border: 2px solid black;
@@ -15,7 +15,7 @@
   justify-content: center;
   align-items: center;
   background-color: darkgreen;
-  height: 100vh;
+  height: 80vh;
 }
 body {
   background-color: darkgreen;
@@ -23,26 +23,44 @@ body {
 button {
   background-color: darkgreen;
   border: 1px solid #000;
-  width: 6rem;
-  height: 6rem;
+  width: min(10vh, 10vw);
+  height: min(10vh, 10vw);
+  margin: 0rem;
   justify-content: center;
   align-items: center;
 }
 
+.cell {
+  margin: 0;
+  padding: 0;
+}
+
+
 .cell.one::before {
   content: "";
+  margin-left: 10%;
   display: block;
-  width: 5rem;
-  height: 5rem;
+  width: min(8vh, 8vw);
+  height: min(8vh, 8vw);;
   border-radius: 50%;
   background-color: white;
+}
+
+.cell.empty::before {
+  content: "";
+  display: block;
+  width: min(8vh, 8vw);
+  height: min(8vh, 8vw);;
+  border-radius: 50%;
+  background-color: darkgreen;
 }
 
 .cell.-one::before {
   content: "";
   display: block;
-  width: 5rem;
-  height: 5rem;
+  width: min(8vh, 8vw);
+  height: min(8vh, 8vw);
   border-radius: 50%;
+  margin-left: 10%;
   background-color: black;
 }

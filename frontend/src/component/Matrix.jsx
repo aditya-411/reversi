@@ -60,7 +60,7 @@ class Matrix extends Component {
       console.log("Invalid move:", apiResponse.can_move);
       return;
     }
-    if (apiResponse.can_move === "can't_move") {
+    if (apiResponse.can_move === "can't move") {
       console.log("Game Over", apiResponse.winner, "won");
       this.setState({
         matrix: apiResponse.grid,
@@ -77,7 +77,7 @@ class Matrix extends Component {
     const { redirectToResult, winner } = this.state;
 
     if (redirectToResult) {
-      return <Navigate to="/results" state={{ winner }} replace />;
+      return <Navigate to="/result" state={{ winner }} replace />;
     }
 
     return (

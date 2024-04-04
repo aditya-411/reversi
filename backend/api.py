@@ -45,9 +45,9 @@ def move():
     if len(tree.children) == 0:
         if len(Node(tree.n, -1, tree.grid, tree.depth).children) == 0:
                 if np.count_nonzero(tree.grid == 1)>np.count_nonzero(tree.grid == -1):
-                    return jsonify({"can_move":"can't move", "grid":next_move.grid.tolist(), "winner":"bot"}), 200, {'Content-Type': 'application/json'}
+                    return jsonify({"can_move":"can't move", "grid":tree.grid.tolist(), "winner":"bot"}), 200, {'Content-Type': 'application/json'}
                 else:
-                    return jsonify({"can_move":"can't move", "grid":next_move.grid.tolist(), "winner":"user"}), 200, {'Content-Type': 'application/json'}
+                    return jsonify({"can_move":"can't move", "grid":tree.grid.tolist(), "winner":"user"}), 200, {'Content-Type': 'application/json'}
         else:
                 return jsonify({"can_move":"can move", "grid":tree.grid.tolist()}), 200, {'Content-Type': 'application/json'}
 
