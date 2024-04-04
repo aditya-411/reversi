@@ -227,14 +227,9 @@ class Node:
         return "can move"
     
     def find_next_move(self):
-        if self.children == []:
-            if len(Node(self.n, self.chance*-1, self.grid, self.depth).children) == 0:
-                return "game over", None 
-            else:
-                return "opponent chance", None
         ans_arr = [i for i in self.children if i.score == self.score]
         ans = ans_arr[0]
         for i in ans_arr[1:]:
             if i.score > ans.score:
                 ans = i
-        return ans.grid.tolist(), [i.grid.tolist() for i in self.children]
+        return ans
