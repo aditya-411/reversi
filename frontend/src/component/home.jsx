@@ -22,7 +22,7 @@ const Home = () => {
       </p>
       <p>To start playing, click the Start button below.</p>
       <button onClick={goToStart} className='start'>Start</button>
-      <button onClick={goToAbout} className='leaderboard'>Leaderboard</button>
+      <button onClick={goToAbout} className='leader'>Leaderboard</button>
     </div>
  );
 };

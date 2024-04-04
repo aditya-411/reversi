@@ -56,7 +56,7 @@ class Matrix extends Component {
 
   render() {
     return (
-      <div>
+      <div className="matrix">
         {this.state.matrix.map((row, rowIndex) => (
           <div key={rowIndex}>
             {row.map((cell, colIndex) => {
