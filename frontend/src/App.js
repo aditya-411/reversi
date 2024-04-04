@@ -7,6 +7,7 @@ import {
 import Home from "./component/home.jsx";
 import About from "./component/about.jsx";
 import Game from "./component/Matrix.jsx";
+import Result from "./component/result.jsx";
 class App extends Component {
     render() {
         return (
@@ -24,6 +25,10 @@ class App extends Component {
                         <Route
                             path="/about"
                             element={<About />}
+                        ></Route>
+                        <Route
+                            path="/result"
+                            element={<Result />}
                         ></Route>
                     </Routes>
                 </div>
