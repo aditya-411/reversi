@@ -6,7 +6,7 @@ import {
 } from "react-router-dom";
 import Home from "./component/home.jsx";
 import About from "./component/about.jsx";
-import Game from "./component/Game.js";
+import Game from "./component/Matrix.jsx";
 class App extends Component {
     render() {
         return (
