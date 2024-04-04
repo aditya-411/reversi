@@ -38,8 +38,8 @@
    .cell.-one::before {
     content: "";
     display: block;
-    width: 5rem; /* Adjust size as needed */
-    height: 5rem; /* Adjust size as needed */
+    width: 5rem; 
+    height: 5rem; 
     border-radius: 50%;
     background-color: black;
    }

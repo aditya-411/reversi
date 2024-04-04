@@ -21,14 +21,36 @@ class Matrix extends Component {
       matrix: initialMatrix,
     };
   }
-
-  updateCell = (row, col) => {
+  sendMatrixToAPI = async (matrix) => {
+    try {
+       const response = await fetch('YOUR_API_ENDPOINT', {
+         method: 'POST',
+         headers: {
+           'Content-Type': 'application/json',
+         },
+         body: JSON.stringify({ matrix }),
+       });
+   
+       if (!response.ok) {
+         throw new Error('Network response was not ok');
+       }
+   
+       const data = await response.json();
+       return data;
+    } catch (error) {
+       console.error('There was a problem with the fetch operation:', error);
+    }
+   };
+   
+   updateCell = async (row, col) => {
     const newMatrix = this.state.matrix.map((row) => [...row]);
     const currentValue = newMatrix[row][col];
     const newValue = currentValue === -1 ? 1 : -1;
     newMatrix[row][col] = newValue;
     this.setState({ matrix: newMatrix });
-  };
+    const apiResponse = await this.sendMatrixToAPI(newMatrix);    
+    this.setState({ matrix: apiResponse });
+   };
 
   render() {
     return (
